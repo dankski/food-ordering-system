@@ -1,0 +1,9 @@
+*.jar
+*.lst
+*.dot
+**/volumes/kafka/broker-*/**
+**/volumes/kafka/master/**
+**/volumes/zookeeper/data/**
+**/volumes/zookeeper/transactions/**
+
+**/target/**
