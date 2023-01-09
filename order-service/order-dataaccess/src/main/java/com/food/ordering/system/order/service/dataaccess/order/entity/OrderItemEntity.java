@@ -12,6 +12,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(OrderItemEntityId.class)
 @Table(name = "order_items")
 @Entity
 public class OrderItemEntity {
