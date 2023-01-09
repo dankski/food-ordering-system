@@ -16,9 +16,9 @@
     </properties>
 
     <modules>
-        <module>oder-domain</module>
-        <module>oder-application</module>
-        <module>oder-dataaccess</module>
+        <module>order-domain</module>
+        <module>order-application</module>
+        <module>order-dataaccess</module>
         <module>order-messaging</module>
         <module>order-container</module>
     </modules>

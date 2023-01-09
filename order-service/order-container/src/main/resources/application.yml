@@ -15,10 +15,10 @@ spring:
   jpa:
     open-in-view: false
     show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
     username: postgres
@@ -37,7 +37,7 @@ kafka-config:
 
 kafka-producer-config:
   key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-  value-serializer-class: io.confluence.kafka.serliaziers.KafkaAvroSerializer
+  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
   compression-type: snappy
   acks: all
   batch-size: 16384
@@ -47,17 +47,17 @@ kafka-producer-config:
   retry-count: 5
 
 kafka-consumer-config:
-  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-  value-serializer-class: io.confluence.kafka.serliaziers.KafkaAvroSerializer
+  key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
   payment-consumer-group-id: payment-topic-consumer
   restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
   consumer-group-id: customer-topic-consumer
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader
-  specific-avro-reader: specific.avro.reader
+  specific-avro-reader: true
   batch-listener: true
   auto-startup: true
-  cuncurrency-level: 3
+  concurrency-level: 3
   session-timeout-ms: 10000 # Heart Beat timeout
   heartbeat-interval-ms: 3000 # After 3s a consumer will regarded as dead
   max-poll-interval-ms: 300000
