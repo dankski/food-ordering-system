@@ -1,14 +1,8 @@
 package com.food.ordering.system.payment.service.domain;
 
 import com.food.ordering.system.payment.service.domain.dto.PaymentRequest;
-import com.food.ordering.system.payment.service.domain.event.PaymentCanceledEvent;
-import com.food.ordering.system.payment.service.domain.event.PaymentCompletedEvent;
 import com.food.ordering.system.payment.service.domain.event.PaymentEvent;
-import com.food.ordering.system.payment.service.domain.event.PaymentFailedEvent;
 import com.food.ordering.system.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
-import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentCancelledMessagePublisher;
-import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentCompletedMessagePublisher;
-import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentFailedMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +11,9 @@ import org.springframework.stereotype.Service;
 public class PaymentRequestMessageListenerImpl implements PaymentRequestMessageListener {
 
     private final PaymentRequestHelper paymentRequestHelper;
-    private final PaymentCompletedMessagePublisher paymentCompletedMessagePublisher;
 
-    private final PaymentCancelledMessagePublisher paymentCancelledMessagePublisher;
-
-    private final PaymentFailedMessagePublisher paymentFailedMessagePublisher;
-
-    public PaymentRequestMessageListenerImpl(PaymentRequestHelper paymentRequestHelper,
-                                             PaymentCompletedMessagePublisher paymentCompletedMessagePublisher,
-                                             PaymentCancelledMessagePublisher cancelledMessagePublisher,
-                                             PaymentFailedMessagePublisher paymentFailedMessagePublisher) {
+    public PaymentRequestMessageListenerImpl(PaymentRequestHelper paymentRequestHelper) {
         this.paymentRequestHelper = paymentRequestHelper;
-        this.paymentCompletedMessagePublisher = paymentCompletedMessagePublisher;
-        this.paymentCancelledMessagePublisher = cancelledMessagePublisher;
-        this.paymentFailedMessagePublisher = paymentFailedMessagePublisher;
     }
 
     @Override
@@ -51,12 +34,6 @@ public class PaymentRequestMessageListenerImpl implements PaymentRequestMessageL
                 paymentEvent.getPayment().getId().getValue(),
                 paymentEvent.getPayment().getOrderId().getValue());
 
-        if (paymentEvent instanceof PaymentCompletedEvent) {
-            paymentCompletedMessagePublisher.publish((PaymentCompletedEvent) paymentEvent);
-        } else if (paymentEvent instanceof PaymentCanceledEvent) {
-            paymentCancelledMessagePublisher.publish((PaymentCanceledEvent) paymentEvent);
-        } else if (paymentEvent instanceof PaymentFailedEvent) {
-            paymentFailedMessagePublisher.publish((PaymentCanceledEvent) paymentEvent);
-        }
+        paymentEvent.fire();
     }
 }
