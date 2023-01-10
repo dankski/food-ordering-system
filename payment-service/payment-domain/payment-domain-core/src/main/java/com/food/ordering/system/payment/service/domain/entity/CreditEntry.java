@@ -3,9 +3,9 @@ package com.food.ordering.system.payment.service.domain.entity;
 import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.valueobject.CustomerId;
 import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.payment.service.domain.valueobject.CreditEntityId;
+import com.food.ordering.system.payment.service.domain.valueobject.CreditEntryId;
 
-public class CreditEntry extends BaseEntity<CreditEntityId> {
+public class CreditEntry extends BaseEntity<CreditEntryId> {
 
     private final CustomerId customerId;
     private Money totalCreditAmount;
@@ -24,7 +24,7 @@ public class CreditEntry extends BaseEntity<CreditEntityId> {
         customerId = builder.customerId;
         totalCreditAmount = builder.totalCreditAmount;
     }
-    
+
     public static Builder builder() {
         return new Builder();
     }
@@ -38,7 +38,7 @@ public class CreditEntry extends BaseEntity<CreditEntityId> {
     }
 
     public static final class Builder {
-        private CreditEntityId creditEntityId;
+        private CreditEntryId creditEntityId;
         private CustomerId customerId;
         private Money totalCreditAmount;
 
@@ -49,7 +49,7 @@ public class CreditEntry extends BaseEntity<CreditEntityId> {
             return new Builder();
         }
 
-        public Builder id(CreditEntityId val) {
+        public Builder creditEntryId(CreditEntryId val) {
             creditEntityId = val;
             return this;
         }
