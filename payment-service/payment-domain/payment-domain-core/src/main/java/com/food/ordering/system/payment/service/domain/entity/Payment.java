@@ -44,9 +44,13 @@ public class Payment extends AggregateRoot<PaymentId> {
         setId(builder.paymentId);
         orderId = builder.orderId;
         customerId = builder.customerId;
-        price = builder.money;
+        price = builder.price;
         paymentStatus = builder.paymentStatus;
         createdAt = builder.createdAt;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public OrderId getOrderId() {
@@ -74,15 +78,11 @@ public class Payment extends AggregateRoot<PaymentId> {
         private PaymentId paymentId;
         private OrderId orderId;
         private CustomerId customerId;
-        private Money money;
+        private Money price;
         private PaymentStatus paymentStatus;
         private ZonedDateTime createdAt;
 
         private Builder() {
-        }
-
-        public static Builder builder() {
-            return new Builder();
         }
 
         public Builder id(PaymentId val) {
@@ -100,8 +100,8 @@ public class Payment extends AggregateRoot<PaymentId> {
             return this;
         }
 
-        public Builder money(Money val) {
-            money = val;
+        public Builder price(Money val) {
+            price = val;
             return this;
         }
 
