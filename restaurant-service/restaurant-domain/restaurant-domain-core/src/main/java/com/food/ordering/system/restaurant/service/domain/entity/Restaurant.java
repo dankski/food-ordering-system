@@ -37,8 +37,9 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
             failureMessages.add("Price total is not correct for order: " + orderDetail.getId());
         }
     }
+    
 
-    public void setOrderApproval(OrderApprovalStatus orderApprovalStatus) {
+    public void constructOrderApproval(OrderApprovalStatus orderApprovalStatus) {
         this.orderApproval = OrderApproval.builder()
                 .orderApprovalId(new OrderApprovalId(UUID.randomUUID()))
                 .restaurantId(this.getId())
