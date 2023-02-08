@@ -9,7 +9,7 @@ import com.food.ordering.system.order.service.domain.exception.OrderDomainExcept
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository;
-import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderSagaHelper;
 import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class OrderCreateHelper {
     private final OrderDomainService orderDomainService;
 
-    private final OrderRepository orderRepository;
+    private final OrderSagaHelper orderRepository;
 
     private final CustomerRepository customerRepository;
 
@@ -34,7 +34,7 @@ public class OrderCreateHelper {
     private final OrderCreatedPaymentRequestMessagePublisher orderCreatedEventDomainEventPublisher;
 
     public OrderCreateHelper(OrderDomainService orderDomainService,
-                             OrderRepository orderRepository,
+                             OrderSagaHelper orderRepository,
                              CustomerRepository customerRepository,
                              RestaurantRepository restaurantRepository,
                              OrderDataMapper orderDataMapper,

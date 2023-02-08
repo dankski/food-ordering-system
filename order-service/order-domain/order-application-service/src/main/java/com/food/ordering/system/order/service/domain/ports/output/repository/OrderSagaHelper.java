@@ -6,7 +6,7 @@ import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
 
 import java.util.Optional;
 
-public interface OrderRepository {
+public interface OrderSagaHelper {
 
     Order save(Order order);
 

@@ -4,7 +4,7 @@ import com.food.ordering.system.order.service.domain.ports.output.message.publis
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository;
-import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderSagaHelper;
 import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,13 +29,13 @@ public class OrderTestConfiguration {
     }
 
     @Bean
-    public OrderRepository orderRepository() {
-        return Mockito.mock(OrderRepository.class);
+    public OrderSagaHelper orderRepository() {
+        return Mockito.mock(OrderSagaHelper.class);
     }
 
 
     // These are the output ports
-    
+
     @Bean
     public CustomerRepository customerRepository() {
         return Mockito.mock(CustomerRepository.class);
