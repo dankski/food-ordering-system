@@ -73,7 +73,7 @@ public class OrderMessagingDataMapper {
                 .price(paymentResponseAvroModel.getPrice())
                 .createdAt(paymentResponseAvroModel.getCreatedAt())
                 .paymentStatus(PaymentStatus.valueOf(paymentResponseAvroModel.getPaymentStatus().name()))
-                .failureMessages(paymentResponseAvroModel.getFailureMessage())
+                .failureMessages(paymentResponseAvroModel.getFailureMessages())
                 .build();
     }
 

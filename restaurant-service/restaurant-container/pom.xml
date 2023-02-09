@@ -38,9 +38,11 @@
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot</artifactId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <image>${project.groupId}]/restaurant.service:${project.version}</image>
+                    <image>
+                        <name>${project.groupId}/restaurant.service:${project.version}</name>
+                    </image>
                 </configuration>
                 <executions>
                     <execution>
@@ -53,5 +55,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

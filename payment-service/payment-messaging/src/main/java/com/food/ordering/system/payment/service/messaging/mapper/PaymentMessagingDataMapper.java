@@ -26,7 +26,7 @@ public class PaymentMessagingDataMapper {
                 .setPrice(paymentCompletedEvent.getPayment().getPrice().getAmount())
                 .setCreatedAt(paymentCompletedEvent.getPayment().getCreatedAt().toInstant())
                 .setPaymentStatus(PaymentStatus.valueOf(paymentCompletedEvent.getPayment().getPaymentStatus().name()))
-                .setFailureMessage(paymentCompletedEvent.getFailureMessages())
+                .setFailureMessages(paymentCompletedEvent.getFailureMessages())
                 .build();
     }
 
@@ -41,7 +41,7 @@ public class PaymentMessagingDataMapper {
                 .setPrice(paymentCancelledEvent.getPayment().getPrice().getAmount())
                 .setCreatedAt(paymentCancelledEvent.getPayment().getCreatedAt().toInstant())
                 .setPaymentStatus(PaymentStatus.valueOf(paymentCancelledEvent.getPayment().getPaymentStatus().name()))
-                .setFailureMessage(paymentCancelledEvent.getFailureMessages())
+                .setFailureMessages(paymentCancelledEvent.getFailureMessages())
                 .build();
     }
 
@@ -56,7 +56,7 @@ public class PaymentMessagingDataMapper {
                 .setPrice(paymentFailedEvent.getPayment().getPrice().getAmount())
                 .setCreatedAt(paymentFailedEvent.getPayment().getCreatedAt().toInstant())
                 .setPaymentStatus(PaymentStatus.valueOf(paymentFailedEvent.getPayment().getPaymentStatus().name()))
-                .setFailureMessage(paymentFailedEvent.getFailureMessages())
+                .setFailureMessages(paymentFailedEvent.getFailureMessages())
                 .build();
     }
 
