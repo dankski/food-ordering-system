@@ -16,15 +16,12 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse, OrderPaidEven
 
     private final OrderDomainService orderDomainService;
     private final OrderSagaHelper orderSagaHelper;
-    private final OrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestMessagePublisher;
 
 
     public OrderPaymentSaga(OrderDomainService orderDomainService,
-                            OrderSagaHelper orderSagaHelper,
-                            OrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestMessagePublisher) {
+                            OrderSagaHelper orderSagaHelper) {
         this.orderDomainService = orderDomainService;
         this.orderSagaHelper = orderSagaHelper;
-        this.orderPaidRestaurantRequestMessagePublisher = orderPaidRestaurantRequestMessagePublisher;
     }
 
     @Override
@@ -33,7 +30,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse, OrderPaidEven
     public OrderPaidEvent process(PaymentResponse paymentResponse) {
         log.info("Completing payment for order with id: {}", paymentResponse.getOrderId());
         Order order = orderSagaHelper.findOrder(paymentResponse.getOrderId());
-        OrderPaidEvent domainEvent = orderDomainService.payOrder(order, orderPaidRestaurantRequestMessagePublisher);
+        OrderPaidEvent domainEvent = orderDomainService.payOrder(order);
         orderSagaHelper.saveOrder(order);
         log.info("Order with id: {} is paid", order.getId().getValue());
         return domainEvent;

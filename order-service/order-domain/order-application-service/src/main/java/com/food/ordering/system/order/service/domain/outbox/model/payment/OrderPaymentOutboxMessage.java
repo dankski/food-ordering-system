@@ -22,6 +22,11 @@ public class OrderPaymentOutboxMessage {
     private String payload;
     private SagaStatus sagaStatus;
     private OrderStatus orderStatus;
+
+    public void setOutboxStatus(OutboxStatus outboxStatus) {
+        this.outboxStatus = outboxStatus;
+    }
+
     private OutboxStatus outboxStatus;
     private int version;
 

@@ -11,21 +11,6 @@ import org.springframework.context.annotation.Bean;
 public class OrderTestConfiguration {
 
     @Bean
-    public OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher() {
-        return Mockito.mock(OrderCreatedPaymentRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public OrderCancelledPaymentRequestMessagePublisher orderCancelledPaymentRequestMessagePublisher() {
-        return Mockito.mock(OrderCancelledPaymentRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public OrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestMessagePublisher() {
-        return Mockito.mock(OrderPaidRestaurantRequestMessagePublisher.class);
-    }
-
-    @Bean
     public OrderSagaHelper orderRepository() {
         return Mockito.mock(OrderSagaHelper.class);
     }
