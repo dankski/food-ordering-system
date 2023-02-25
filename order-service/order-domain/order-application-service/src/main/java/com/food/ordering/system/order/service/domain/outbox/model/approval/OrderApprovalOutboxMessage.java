@@ -40,4 +40,8 @@ public class OrderApprovalOutboxMessage {
     public OutboxStatus getOutboxStatus() {
         return outboxStatus;
     }
+
+    public void setOutboxStatus(OutboxStatus outboxStatus) {
+        this.outboxStatus = outboxStatus;
+    }
 }
