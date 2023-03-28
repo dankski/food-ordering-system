@@ -22,27 +22,22 @@ public class OrderPaymentOutboxMessage {
     private String payload;
     private SagaStatus sagaStatus;
     private OrderStatus orderStatus;
-
-    public void setOutboxStatus(OutboxStatus outboxStatus) {
-        this.outboxStatus = outboxStatus;
-    }
-
     private OutboxStatus outboxStatus;
     private int version;
 
-    public ZonedDateTime getProcessedAt() {
-        return processedAt;
+    public void setProcessedAt(ZonedDateTime processedAt) {
+        this.processedAt = processedAt;
     }
 
-    public SagaStatus getSagaStatus() {
-        return sagaStatus;
+    public void setSagaStatus(SagaStatus sagaStatus) {
+        this.sagaStatus = sagaStatus;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public OutboxStatus getOutboxStatus() {
-        return outboxStatus;
+    public void setOutboxStatus(OutboxStatus outboxStatus) {
+        this.outboxStatus = outboxStatus;
     }
 }

@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.domain;
 
 import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository;
-import com.food.ordering.system.order.service.domain.ports.output.repository.OrderSagaHelper;
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Bean;
 public class OrderTestConfiguration {
 
     @Bean
-    public OrderSagaHelper orderRepository() {
-        return Mockito.mock(OrderSagaHelper.class);
+    public OrderRepository orderRepository() {
+        return Mockito.mock(OrderRepository.class);
     }
 
 

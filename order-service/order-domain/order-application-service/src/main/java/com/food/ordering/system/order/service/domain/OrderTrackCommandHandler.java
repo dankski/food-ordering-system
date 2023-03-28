@@ -5,7 +5,7 @@ import com.food.ordering.system.order.service.domain.dto.track.TrackOrderRespons
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
-import com.food.ordering.system.order.service.domain.ports.output.repository.OrderSagaHelper;
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,9 +19,9 @@ public class OrderTrackCommandHandler {
 
     private final OrderDataMapper orderDataMapper;
 
-    private final OrderSagaHelper orderRepository;
+    private final OrderRepository orderRepository;
 
-    public OrderTrackCommandHandler(OrderDataMapper orderDataMapper, OrderSagaHelper orderRepository) {
+    public OrderTrackCommandHandler(OrderDataMapper orderDataMapper, OrderRepository orderRepository) {
 
         this.orderDataMapper = orderDataMapper;
         this.orderRepository = orderRepository;
