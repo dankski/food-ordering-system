@@ -66,7 +66,7 @@ public class OrderMessagingDataMapper {
     public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel paymentResponseAvroModel) {
         return PaymentResponse.builder()
                 .id(paymentResponseAvroModel.getId())
-                .sageId(paymentResponseAvroModel.getSagaId())
+                .sagaId(paymentResponseAvroModel.getSagaId())
                 .paymentId(paymentResponseAvroModel.getPaymentId())
                 .customerId(paymentResponseAvroModel.getCustomerId())
                 .orderId(paymentResponseAvroModel.getOrderId())
