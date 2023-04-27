@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 public class PaymentEntity {
 
-    @Id // To indicate, this is the primary key
+    @Id
     private UUID id;
     private UUID customerId;
     private UUID orderId;

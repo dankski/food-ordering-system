@@ -84,7 +84,6 @@ public class OrderApplicationServiceTest {
                         .postalCode("1000AB")
                         .city("Paris")
                         .build())
-
                 .price(PRICE)
                 .items(List.of(OrderItem.builder()
                                 .productId(PRODUCT_ID)
@@ -129,9 +128,8 @@ public class OrderApplicationServiceTest {
                 .address(OrderAddress.builder()
                         .street("street_1")
                         .postalCode("1000AB")
-                        .city("PARIS")
+                        .city("Paris")
                         .build())
-
                 .price(new BigDecimal("210.00"))
                 .items(List.of(OrderItem.builder()
                                 .productId(PRODUCT_ID)
@@ -152,10 +150,8 @@ public class OrderApplicationServiceTest {
 
         Restaurant restaurantResponse = Restaurant.builder()
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-                .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1",
-                                new Money(new BigDecimal("50.00"))),
-                        new Product(new ProductId(PRODUCT_ID), "product-2",
-                                new Money(new BigDecimal("50.00")))))
+                .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
+                        new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
                 .active(true)
                 .build();
 
@@ -165,53 +161,45 @@ public class OrderApplicationServiceTest {
         when(customerRepository.findCustomer(CUSTOMER_ID)).thenReturn(Optional.of(customer));
         when(restaurantRepository.findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
                 .thenReturn(Optional.of(restaurantResponse));
-
         when(orderRepository.save(any(Order.class))).thenReturn(order);
         when(paymentOutboxRepository.save(any(OrderPaymentOutboxMessage.class))).thenReturn(getOrderPaymentOutboxMessage());
     }
 
     @Test
     public void testCreateOrder() {
-        CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
-
-        assertEquals(OrderStatus.PENDING, createOrderResponse.getOrderStatus());
-        assertEquals("Order created successfully", createOrderResponse.getMessage());
-        assertNotNull(createOrderResponse.getOrderTrackingId());
+       CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
+       assertEquals(OrderStatus.PENDING, createOrderResponse.getOrderStatus());
+       assertEquals("Order created successfully", createOrderResponse.getMessage());
+       assertNotNull(createOrderResponse.getOrderTrackingId());
     }
 
     @Test
     public void testCreateOrderWithWrongTotalPrice() {
-        OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
+       OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
                 () -> orderApplicationService.createOrder(createOrderCommandWrongPrice));
-
-        assertEquals("Total price: 250.00 is not equal to Order items total: 200.00!", orderDomainException.getMessage());
+       assertEquals("Total price: 250.00 is not equal to Order items total: 200.00!", orderDomainException.getMessage());
     }
 
     @Test
     public void testCreateOrderWithWrongProductPrice() {
-        OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
+       OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
                 () -> orderApplicationService.createOrder(createOrderCommandWrongProductPrice));
-
-        assertEquals("Order item price: 60.00 is not valid for product " + PRODUCT_ID, orderDomainException.getMessage());
+       assertEquals("Order item price: 60.00 is not valid for product " + PRODUCT_ID, orderDomainException.getMessage());
     }
 
     @Test
     public void testCreateOrderWithPassiveRestaurant() {
-        Restaurant restaurantResponse = Restaurant.builder()
+       Restaurant restaurantResponse = Restaurant.builder()
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-                .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1",
-                                new Money(new BigDecimal("50.00"))),
-                        new Product(new ProductId(PRODUCT_ID), "product-2",
-                                new Money(new BigDecimal("50.00")))))
+                .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
+                        new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
                 .active(false)
                 .build();
-
-        when(restaurantRepository.findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
-                .thenReturn(Optional.of(restaurantResponse));
-
-        OrderDomainException orderDomainException = assertThrows(OrderDomainException.class, () -> orderApplicationService.createOrder(createOrderCommand));
-
-        assertEquals("Restaurant with id: " + RESTAURANT_ID + " is currently not active!", orderDomainException.getMessage());
+       when(restaurantRepository.findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
+               .thenReturn(Optional.of(restaurantResponse));
+       OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
+               () -> orderApplicationService.createOrder(createOrderCommand));
+       assertEquals("Restaurant with id " + RESTAURANT_ID + " is currently not active!", orderDomainException.getMessage());
     }
 
     private OrderPaymentOutboxMessage getOrderPaymentOutboxMessage() {
@@ -219,7 +207,7 @@ public class OrderApplicationServiceTest {
                 .orderId(ORDER_ID.toString())
                 .customerId(CUSTOMER_ID.toString())
                 .price(PRICE)
-                .createAt(ZonedDateTime.now())
+                .createdAt(ZonedDateTime.now())
                 .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
                 .build();
 
@@ -243,4 +231,5 @@ public class OrderApplicationServiceTest {
             throw new OrderDomainException("Cannot create OrderPaymentEventPayload object!");
         }
     }
+
 }

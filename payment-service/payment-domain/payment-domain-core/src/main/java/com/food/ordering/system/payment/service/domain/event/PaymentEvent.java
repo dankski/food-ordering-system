@@ -10,7 +10,6 @@ public abstract class PaymentEvent implements DomainEvent<Payment> {
 
     private final Payment payment;
     private final ZonedDateTime createdAt;
-
     private final List<String> failureMessages;
 
     public PaymentEvent(Payment payment, ZonedDateTime createdAt, List<String> failureMessages) {

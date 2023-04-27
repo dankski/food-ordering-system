@@ -17,6 +17,5 @@ public class TrackOrderResponse {
     private final UUID orderTrackingId;
     @NotNull
     private final OrderStatus orderStatus;
-    @NotNull
-    private final List<String> failureMessage;
+    private final List<String> failureMessages;
 }

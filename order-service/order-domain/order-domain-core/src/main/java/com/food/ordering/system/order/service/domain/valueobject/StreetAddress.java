@@ -9,7 +9,6 @@ public class StreetAddress {
     private final String postalCode;
     private final String city;
 
-
     public StreetAddress(UUID id, String street, String postalCode, String city) {
         this.id = id;
         this.street = street;

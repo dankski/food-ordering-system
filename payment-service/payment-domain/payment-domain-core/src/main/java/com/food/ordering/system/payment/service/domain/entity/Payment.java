@@ -15,14 +15,10 @@ import java.util.UUID;
 public class Payment extends AggregateRoot<PaymentId> {
 
     private final OrderId orderId;
-
     private final CustomerId customerId;
-
     private final Money price;
 
-
     private PaymentStatus paymentStatus;
-
     private ZonedDateTime createdAt;
 
     public void initializePayment() {
@@ -30,9 +26,9 @@ public class Payment extends AggregateRoot<PaymentId> {
         createdAt = ZonedDateTime.now(ZoneId.of("UTC"));
     }
 
-    public void validatePayment(List<String> failureMessage) {
+    public void validatePayment(List<String> failureMessages) {
         if (price == null || !price.isGreaterThanZero()) {
-            failureMessage.add("Total price must be greater than zero!");
+            failureMessages.add("Total price must be greater than zero!");
         }
     }
 
@@ -53,6 +49,7 @@ public class Payment extends AggregateRoot<PaymentId> {
         return new Builder();
     }
 
+
     public OrderId getOrderId() {
         return orderId;
     }
@@ -72,7 +69,6 @@ public class Payment extends AggregateRoot<PaymentId> {
     public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
-
 
     public static final class Builder {
         private PaymentId paymentId;

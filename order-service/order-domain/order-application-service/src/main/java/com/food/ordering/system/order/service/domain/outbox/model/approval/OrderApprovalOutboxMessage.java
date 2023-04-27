@@ -17,7 +17,6 @@ public class OrderApprovalOutboxMessage {
     private UUID id;
     private UUID sagaId;
     private ZonedDateTime createdAt;
-
     private ZonedDateTime processedAt;
     private String type;
     private String payload;
@@ -25,26 +24,6 @@ public class OrderApprovalOutboxMessage {
     private OrderStatus orderStatus;
     private OutboxStatus outboxStatus;
     private int version;
-
-    public ZonedDateTime getProcessedAt() {
-        return processedAt;
-    }
-
-    public SagaStatus getSagaStatus() {
-        return sagaStatus;
-    }
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public OutboxStatus getOutboxStatus() {
-        return outboxStatus;
-    }
-
-    public void setOutboxStatus(OutboxStatus outboxStatus) {
-        this.outboxStatus = outboxStatus;
-    }
 
     public void setProcessedAt(ZonedDateTime processedAt) {
         this.processedAt = processedAt;
@@ -58,4 +37,7 @@ public class OrderApprovalOutboxMessage {
         this.orderStatus = orderStatus;
     }
 
+    public void setOutboxStatus(OutboxStatus outboxStatus) {
+        this.outboxStatus = outboxStatus;
+    }
 }

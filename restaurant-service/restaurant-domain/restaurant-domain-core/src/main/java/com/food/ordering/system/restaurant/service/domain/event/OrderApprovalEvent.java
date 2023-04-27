@@ -7,12 +7,10 @@ import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class OrderApprovalEvent implements DomainEvent<OrderApproval> {
+public abstract class OrderApprovalEvent implements DomainEvent<OrderApproval> {
     private final OrderApproval orderApproval;
     private final RestaurantId restaurantId;
-
     private final List<String> failureMessages;
-
     private final ZonedDateTime createdAt;
 
     public OrderApprovalEvent(OrderApproval orderApproval,
@@ -39,11 +37,5 @@ public class OrderApprovalEvent implements DomainEvent<OrderApproval> {
 
     public ZonedDateTime getCreatedAt() {
         return createdAt;
-    }
-
-
-    @Override
-    public void fire() {
-
     }
 }

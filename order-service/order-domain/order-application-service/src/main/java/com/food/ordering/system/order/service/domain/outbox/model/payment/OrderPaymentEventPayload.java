@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 @Builder
 @AllArgsConstructor
 public class OrderPaymentEventPayload {
+
     @JsonProperty
     private String orderId;
     @JsonProperty
@@ -19,7 +20,7 @@ public class OrderPaymentEventPayload {
     @JsonProperty
     private BigDecimal price;
     @JsonProperty
-    private ZonedDateTime createAt;
+    private ZonedDateTime createdAt;
     @JsonProperty
     private String paymentOrderStatus;
 }

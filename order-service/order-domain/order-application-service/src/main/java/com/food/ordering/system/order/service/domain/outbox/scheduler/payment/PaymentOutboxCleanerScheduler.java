@@ -30,8 +30,7 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
                         OutboxStatus.COMPLETED,
                         SagaStatus.SUCCEEDED,
                         SagaStatus.FAILED,
-                        SagaStatus.COMPENSATED
-                );
+                        SagaStatus.COMPENSATED);
 
         if (outboxMessagesResponse.isPresent()) {
             List<OrderPaymentOutboxMessage> outboxMessages = outboxMessagesResponse.get();
@@ -39,15 +38,13 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
                     outboxMessages.size(),
                     outboxMessages.stream().map(OrderPaymentOutboxMessage::getPayload)
                             .collect(Collectors.joining("\n")));
-
             paymentOutboxHelper.deletePaymentOutboxMessageByOutboxStatusAndSagaStatus(
                     OutboxStatus.COMPLETED,
                     SagaStatus.SUCCEEDED,
                     SagaStatus.FAILED,
                     SagaStatus.COMPENSATED);
-
             log.info("{} OrderPaymentOutboxMessage deleted!", outboxMessages.size());
-
         }
+
     }
 }

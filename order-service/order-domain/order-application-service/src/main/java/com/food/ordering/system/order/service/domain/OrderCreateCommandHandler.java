@@ -17,13 +17,9 @@ import java.util.UUID;
 public class OrderCreateCommandHandler {
 
     private final OrderCreateHelper orderCreateHelper;
-
     private final OrderDataMapper orderDataMapper;
-
     private final PaymentOutboxHelper paymentOutboxHelper;
-
     private final OrderSagaHelper orderSagaHelper;
-
 
     public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper,
                                      OrderDataMapper orderDataMapper,
@@ -43,7 +39,7 @@ public class OrderCreateCommandHandler {
                 "Order created successfully");
 
         paymentOutboxHelper.savePaymentOutboxMessage(orderDataMapper
-                        .orderCreateEventToOrderToOrderPaymentEventPayload(orderCreatedEvent),
+                .orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
                 orderCreatedEvent.getOrder().getOrderStatus(),
                 orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
                 OutboxStatus.STARTED,

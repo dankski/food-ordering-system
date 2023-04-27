@@ -21,7 +21,6 @@ import java.util.UUID;
 import static com.food.ordering.system.domain.DomainConstants.UTC;
 import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
 
-
 @Slf4j
 @Component
 public class OrderOutboxHelper {
@@ -36,7 +35,8 @@ public class OrderOutboxHelper {
 
     @Transactional(readOnly = true)
     public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndPaymentStatus(UUID sagaId,
-                                                                                               PaymentStatus paymentStatus) {
+                                                                                               PaymentStatus
+                                                                                                       paymentStatus) {
         return orderOutboxRepository.findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(ORDER_SAGA_NAME, sagaId,
                 paymentStatus, OutboxStatus.COMPLETED);
     }

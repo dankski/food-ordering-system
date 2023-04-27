@@ -68,7 +68,8 @@ CREATE TYPE outbox_status AS ENUM ('STARTED', 'COMPLETED', 'FAILED');
 
 DROP TABLE IF EXISTS "order".payment_outbox CASCADE;
 
-CREATE TABLE "order".payment_outbox (
+CREATE TABLE "order".payment_outbox
+(
     id uuid NOT NULL,
     saga_id uuid NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -92,7 +93,8 @@ CREATE INDEX "payment_outbox_saga_status"
 
 DROP TABLE IF EXISTS "order".restaurant_approval_outbox CASCADE;
 
-CREATE TABLE "order".restaurant_approval_outbox (
+CREATE TABLE "order".restaurant_approval_outbox
+(
     id uuid NOT NULL,
     saga_id uuid NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -113,3 +115,4 @@ CREATE INDEX "restaurant_approval_outbox_saga_status"
 --CREATE UNIQUE INDEX "restaurant_approval_outbox_saga_id"
 --    ON "order".restaurant_approval_outbox
 --    (type, saga_id, saga_status);
+

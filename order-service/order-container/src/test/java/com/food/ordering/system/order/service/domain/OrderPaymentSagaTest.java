@@ -21,6 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
@@ -41,7 +42,6 @@ public class OrderPaymentSagaTest {
     private final UUID CUSTOMER_ID = UUID.fromString("d215b5f8-0249-4dc5-89a3-51fd148cfb41");
     private final UUID PAYMENT_ID = UUID.randomUUID();
     private final BigDecimal PRICE = new BigDecimal("100");
-
 
     @Test
     void testDoublePayment() {

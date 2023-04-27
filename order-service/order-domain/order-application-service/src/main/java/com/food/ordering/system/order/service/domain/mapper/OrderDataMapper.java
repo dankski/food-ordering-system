@@ -5,10 +5,7 @@ import com.food.ordering.system.order.service.domain.dto.create.CreateOrderComma
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
-import com.food.ordering.system.order.service.domain.entity.Order;
-import com.food.ordering.system.order.service.domain.entity.OrderItem;
-import com.food.ordering.system.order.service.domain.entity.Product;
-import com.food.ordering.system.order.service.domain.entity.Restaurant;
+import com.food.ordering.system.order.service.domain.entity.*;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
@@ -26,33 +23,26 @@ import java.util.stream.Collectors;
 public class OrderDataMapper {
 
     public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand) {
-        return Restaurant
-                .builder()
+        return Restaurant.builder()
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-                .products(createOrderCommand
-                        .getItems()
-                        .stream()
-                        .map(orderItem ->
-                                new Product(new ProductId(orderItem.getProductId())))
+                .products(createOrderCommand.getItems().stream().map(orderItem ->
+                        new Product(new ProductId(orderItem.getProductId())))
                         .collect(Collectors.toList()))
                 .build();
     }
-
+    
     public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
-        return Order
-                .builder()
+        return Order.builder()
                 .customerId(new CustomerId(createOrderCommand.getCustomerId()))
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
                 .deliveryAddress(orderAddressToStreetAddress(createOrderCommand.getAddress()))
                 .price(new Money(createOrderCommand.getPrice()))
-                .items(orderItemsToOrderItemsEntities(createOrderCommand.getItems()))
+                .items(orderItemsToOrderItemEntities(createOrderCommand.getItems()))
                 .build();
     }
 
-
     public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
-        return CreateOrderResponse
-                .builder()
+        return CreateOrderResponse.builder()
                 .orderTrackingId(order.getTrackingId().getValue())
                 .orderStatus(order.getOrderStatus())
                 .message(message)
@@ -60,38 +50,36 @@ public class OrderDataMapper {
     }
 
     public TrackOrderResponse orderToTrackOrderResponse(Order order) {
-        return TrackOrderResponse
-                .builder()
+        return TrackOrderResponse.builder()
                 .orderTrackingId(order.getTrackingId().getValue())
                 .orderStatus(order.getOrderStatus())
-                .failureMessage(order.getFailureMessages())
-                .build();
-    }
-    
-    public OrderPaymentEventPayload orderCancelledEventToOrderPaymentEventPayload(OrderCancelledEvent orderCancelledEvent) {
-        return OrderPaymentEventPayload.builder()
-                .customerId(orderCancelledEvent.getOrder().getCustomerId().getValue().toString())
-                .orderId(orderCancelledEvent.getOrder().getId().getValue().toString())
-                .price(orderCancelledEvent.getOrder().getPrice().getAmount())
-                .createAt(orderCancelledEvent.getCreatedAt())
-                .paymentOrderStatus(PaymentOrderStatus.CANCELLED.name())
+                .failureMessages(order.getFailureMessages())
                 .build();
     }
 
-    public OrderPaymentEventPayload orderCreateEventToOrderToOrderPaymentEventPayload(OrderCreatedEvent orderCreatedEvent) {
+    public OrderPaymentEventPayload orderCreatedEventToOrderPaymentEventPayload(OrderCreatedEvent orderCreatedEvent) {
         return OrderPaymentEventPayload.builder()
                 .customerId(orderCreatedEvent.getOrder().getCustomerId().getValue().toString())
                 .orderId(orderCreatedEvent.getOrder().getId().getValue().toString())
                 .price(orderCreatedEvent.getOrder().getPrice().getAmount())
-                .createAt(orderCreatedEvent.getCreatedAt())
+                .createdAt(orderCreatedEvent.getCreatedAt())
                 .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
                 .build();
     }
 
+    public OrderPaymentEventPayload orderCancelledEventToOrderPaymentEventPayload(OrderCancelledEvent
+                                                                                          orderCancelledEvent) {
+        return OrderPaymentEventPayload.builder()
+                .customerId(orderCancelledEvent.getOrder().getCustomerId().getValue().toString())
+                .orderId(orderCancelledEvent.getOrder().getId().getValue().toString())
+                .price(orderCancelledEvent.getOrder().getPrice().getAmount())
+                .createdAt(orderCancelledEvent.getCreatedAt())
+                .paymentOrderStatus(PaymentOrderStatus.CANCELLED.name())
+                .build();
+    }
 
     public OrderApprovalEventPayload orderPaidEventToOrderApprovalEventPayload(OrderPaidEvent orderPaidEvent) {
-        return OrderApprovalEventPayload
-                .builder()
+        return OrderApprovalEventPayload.builder()
                 .orderId(orderPaidEvent.getOrder().getId().getValue().toString())
                 .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue().toString())
                 .restaurantOrderStatus(RestaurantOrderStatus.PAID.name())
@@ -105,16 +93,17 @@ public class OrderDataMapper {
                 .build();
     }
 
-    private List<OrderItem> orderItemsToOrderItemsEntities(List<com.food.ordering.system.order.service.domain.dto.create.OrderItem> orderItems) {
-        return orderItems
-                .stream()
-                .map(orderItem -> OrderItem.builder()
-                        .product(new Product(new ProductId(orderItem.getProductId())))
-                        .price(new Money(orderItem.getPrice()))
-                        .quantity(orderItem.getQuantity())
-                        .subTotal(new Money(orderItem.getSubTotal()))
-                        .build())
-                .collect(Collectors.toList());
+
+    private List<OrderItem> orderItemsToOrderItemEntities(
+            List<com.food.ordering.system.order.service.domain.dto.create.OrderItem> orderItems) {
+        return orderItems.stream()
+                .map(orderItem ->
+                        OrderItem.builder()
+                                .product(new Product(new ProductId(orderItem.getProductId())))
+                                .price(new Money(orderItem.getPrice()))
+                                .quantity(orderItem.getQuantity())
+                                .subTotal(new Money(orderItem.getSubTotal()))
+                                .build()).collect(Collectors.toList());
     }
 
     private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
@@ -122,6 +111,7 @@ public class OrderDataMapper {
                 UUID.randomUUID(),
                 orderAddress.getStreet(),
                 orderAddress.getPostalCode(),
-                orderAddress.getCity());
+                orderAddress.getCity()
+        );
     }
 }

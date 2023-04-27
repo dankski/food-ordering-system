@@ -13,7 +13,6 @@ order-service:
   outbox-scheduler-fixed-rate: 10000
   outbox-scheduler-initial-delay: 10000
 
-
 spring:
   jpa:
     open-in-view: false
@@ -54,21 +53,16 @@ kafka-consumer-config:
   value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
   payment-consumer-group-id: payment-topic-consumer
   restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
-  consumer-group-id: customer-topic-consumer
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader
   specific-avro-reader: true
   batch-listener: true
   auto-startup: true
   concurrency-level: 3
-  session-timeout-ms: 10000 # Heart Beat timeout
-  heartbeat-interval-ms: 3000 # After 3s a consumer will regarded as dead
+  session-timeout-ms: 10000
+  heartbeat-interval-ms: 3000
   max-poll-interval-ms: 300000
-  max-poll-records: 500 # Consumer can fetch at max 500 items
+  max-poll-records: 500
   max-partition-fetch-bytes-default: 1048576
   max-partition-fetch-bytes-boost-factor: 1
   poll-timeout-ms: 150
-
-
-
-

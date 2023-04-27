@@ -3,13 +3,13 @@ package com.food.ordering.system.order.service.domain;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.repository.*;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(scanBasePackages = "com.food.ordering.system")
 public class OrderTestConfiguration {
-
 
     @Bean
     public PaymentRequestMessagePublisher paymentRequestMessagePublisher() {
@@ -25,9 +25,6 @@ public class OrderTestConfiguration {
     public OrderRepository orderRepository() {
         return Mockito.mock(OrderRepository.class);
     }
-
-
-    // These are the output ports
 
     @Bean
     public CustomerRepository customerRepository() {
@@ -53,4 +50,5 @@ public class OrderTestConfiguration {
     public OrderDomainService orderDomainService() {
         return new OrderDomainServiceImpl();
     }
+
 }
